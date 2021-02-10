@@ -1,0 +1,32 @@
+@font-face{
+	font-family:'NotoSans';
+	src:url('./NotoSans-Regular.ttf') format('ttf');
+	font-weight:600;
+	font-style:normal;
+}
+
+html,body{
+	width:100vw;
+	height:100vh;
+	font-family:'NotoSans';
+}
+
+body{
+	margin:0px;
+	padding:0px;
+}
+
+#flex-container{
+	display:flex;
+	flex-wrap: wrap;
+}
+
+#search-bar{
+	width:100%;
+	text-align:right;
+	background-color: green;
+}
+#weather-info{
+	
+}
+
