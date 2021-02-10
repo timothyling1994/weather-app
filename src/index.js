@@ -2,7 +2,16 @@
 //import Notes from './data.csv';
 //import printMe from './print.js';
 import './style.css';
+import {staticListeners} from './staticListeners.js';
 
 //a72226ceaa46bff6856874cd13357838
 
-console.log("test");
+
+function theDomHasLoaded(e) {
+
+	staticListeners();
+}
+
+document.addEventListener("DOMContentLoaded",theDomHasLoaded,false);
+
+

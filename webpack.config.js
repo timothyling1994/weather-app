@@ -15,10 +15,10 @@
   },
 	//if you change name of entry files above, and call the outputted bundle files in your html, the below plugin will make that change automatically
 	plugins: [
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    /**new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
       new HtmlWebpackPlugin({
         title: 'development',
-      }),
+      }),**/
   ],
   output: {
     filename: 'main.js',
@@ -46,7 +46,11 @@
         loader: 'babel-loader',
         options: {
           presets: [
-            ['@babel/preset-env', { targets: "defaults" }]
+            ['@babel/preset-env', {
+              "useBuiltIns": "usage",
+              "corejs": 3, // or 2, targets: "defaults" }]
+              "targets": "defaults",
+            }]
           ]
         }
       }
