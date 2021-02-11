@@ -8,15 +8,17 @@ import { domController } from './domController.js'
 
 function theDomHasLoaded(e) {
 
-	staticListeners();
 	defaultDisplay();
+	staticListeners();
 
 }
 
 async function defaultDisplay(){
 	let input = "San Francisco";
 	let weatherObj = await requestAPI.requestHandler(input);
-	domController.updateTodayDOM(weatherObj);
+
+	domController.updateTodayDOM(weatherObj.currentWeatherObj);
+	domController.updateSevenDayForecast(weatherObj.forecastWeatherArray);
 }
 
 document.addEventListener("DOMContentLoaded",theDomHasLoaded,false);

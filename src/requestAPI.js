@@ -1,5 +1,3 @@
-import { domController } from './domController.js'
-
 let requestAPI = (() => {
 
 	let apiKey = 'a72226ceaa46bff6856874cd13357838';
@@ -40,29 +38,64 @@ let requestAPI = (() => {
 	};
 
 	const requestHandler = async (city_search) =>{
-		let payload = await requestAPI.getLatLong(city_search);
+		let payload1 = await requestAPI.getLatLong(city_search);
 
-		let weather_data = await requestAPI.getCityData(payload.coord.lat,payload.coord.lon);
+		let payload2 = await requestAPI.getCityData(payload1.coord.lat,payload1.coord.lon);
 
-		console.log(payload);
-		console.log(weather_data);
+		console.log(payload1);
+		console.log(payload2);
 
-		let weatherObj = createWeatherObj(payload,weather_data);
+		let currentWeatherObj = createCurrentWeatherObj(payload1,payload2);
+		let forecastWeatherArray = createForecastWeatherObj(payload2);
 
-		return weatherObj;
+		//forecastWeatherArray.forEach((day)=>console.log(day));
+
+		return {currentWeatherObj,forecastWeatherArray};
 
 	};
 
-	const createWeatherObj = (payload,weather_data) => {
+	const createForecastWeatherObj = (payload2) =>{
+		let forecastArray = [];
 
-		let current_description = weather_data.current.weather[0].description;
-		let current_main_descrip = weather_data.current.weather[0].main;
-		let current_temp = weather_data.current.temp;
-		let current_feels_like = weather_data.current.feels_like;
-		let current_temp_min = payload.main.temp_min;
-		let current_temp_max = payload.main.temp_max;
-		let current_name = payload.name;
-		let current_country = payload.sys.country;
+
+		//skip current day weather
+		for (let i = 1;i<8;i++)
+		{
+			//console.log(payload2.daily[i].weather[0].description);
+			//console.log(payload2.daily[i].temp.min);
+			//console.log(payload2.daily[i].temp.max);
+
+			let description = payload2.daily[i].weather[0].description;
+			let temp_min = payload2.daily[i].temp.min;
+			let temp_max = payload2.daily[i].temp.max;
+
+			let forecastObj = {
+				description,
+				temp_min,
+				temp_max
+			}
+
+			forecastArray.push(forecastObj);
+
+		}
+
+		return forecastArray;
+	};
+
+	const createCurrentWeatherObj = (payload1,payload2) => {
+
+		let current_description = payload2.current.weather[0].description;
+		let current_main_descrip = payload2.current.weather[0].main;
+		let current_temp = payload2.current.temp;
+		let current_feels_like = payload2.current.feels_like;
+		let current_temp_min = payload2.daily[0].temp.min;
+		let current_temp_max = payload2.daily[0].temp.max;
+		let current_name = payload1.name;
+		let current_country = payload1.sys.country;
+		/*let current_temp_min = payload1.main.temp_min;
+		let current_temp_max = payload1.main.temp_max;
+		let current_name = payload1.name;
+		let current_country = payload1.sys.country;*/
 
 
 		let currentWeatherObj = {

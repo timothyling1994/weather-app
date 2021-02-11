@@ -38,7 +38,7 @@ input {
 	justify-content: center;
 	align-content: center;
 	width:100%;
-	height:70vh;
+	height:65vh;
 
 	background-color: blue;
 }
@@ -75,7 +75,6 @@ input {
 	align-content: center;
 	margin:5px;
 
-
 }
 #temp{
 	font-size:60px;
@@ -107,8 +106,37 @@ input {
 
 
 #forecast-content{
-	height:25vh;
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	justify-content: center;
+	align-content: center;
+	height:30vh;
 	width:100%;
-
+	background-color: pink;
 }
 
+.day-container{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+	justify-content: center;
+	align-content: center;
+	width:10.5vw;
+	height:10.5vw;
+	border: 2px solid black;
+	margin-left:1.5vw;
+	margin-right:1.5vw;
+}
+
+.day,.forecast-description{
+	width:100%;
+	text-align:center;
+	background-color: purple;
+}
+
+.forecast-min-temp,.forecast-max-temp
+{
+	width:47%;
+	text-align:center;
+}
