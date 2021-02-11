@@ -13,30 +13,30 @@ let staticListeners = () => {
 
 			let weather_data = await requestAPI.requestCityData(payload.coord.lat,payload.coord.lon);
 
+			console.log(payload);
+			console.log(weather_data);
 
-			/*
-			payload[0].json().then((jsonData) => {
-
-				let description = jsonData.weather[0].description;
-				let temp = jsonData.main.temp;
-				let feels_like = jsonData.main.feels_like;
-				let temp_min = jsonData.main.temp_min;
-				let temp_max = jsonData.main.temp_max;
-				let name = jsonData.name;
+			let current_description = weather_data.current.weather[0].description;
+			let current_main_descrip = weather_data.current.weather[0].main;
+			let current_temp = weather_data.current.temp;
+			let current_feels_like = weather_data.current.feels_like;
+			let current_temp_min = payload.main.temp_min;
+			let current_temp_max = payload.main.temp_max;
+			let current_name = payload.name;
 
 
-				let weatherObj = {
+			let currentWeatherObj = {
 
-					description,
-					temp,
-					feels_like,
-					temp_min,
-					temp_max,
-					name
-				}
+				current_description,
+				current_temp,
+				current_feels_like,
+				current_temp_min,
+				current_temp_max,
+				current_name,
+				current_main_descrip
+			};
 
-				domController.updateTodayDOM(weatherObj);
-			});*/
+			domController.updateTodayDOM(currentWeatherObj);
 			
 		}
 	});

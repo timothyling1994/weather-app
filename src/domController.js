@@ -12,14 +12,15 @@ let domController = (() => {
 	};
 
 	const updateTodayDOM = (weatherObj) => {
+
 		clearDOM();
 
-		let description = document.createTextNode(weatherObj.description);
-		let temp = document.createTextNode(weatherObj.temp);
-		let feels_like = document.createTextNode(weatherObj.feels_like);
-		let temp_min = document.createTextNode(weatherObj.temp_min);
-		let temp_max = document.createTextNode(weatherObj.temp_max);
-		let name = document.createTextNode(weatherObj.name);
+		let description = document.createTextNode(weatherObj.current_description);
+		let temp = document.createTextNode(weatherObj.current_temp);
+		let feels_like = document.createTextNode(weatherObj.current_feels_like);
+		let temp_min = document.createTextNode(weatherObj.current_temp_min);
+		let temp_max = document.createTextNode(weatherObj.current_temp_max);
+		let name = document.createTextNode(weatherObj.current_name);
 
 		let new_weather_info = document.createElement("div");
 		new_weather_info.setAttribute("id","weather-info");

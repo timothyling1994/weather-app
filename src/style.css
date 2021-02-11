@@ -1,7 +1,6 @@
 @font-face{
-	font-family:'NotoSans';
+	font-family: 'NotoSans';
 	src:url('./NotoSans-Regular.ttf') format('ttf');
-	font-weight:600;
 	font-style:normal;
 }
 
@@ -19,12 +18,12 @@ body{
 #flex-container{
 	display:flex;
 	flex-wrap: wrap;
+	
 }
 
 #search-bar-container{
 	width:100%;
 	height:5vh;
-	background-color: green;
 }
 
 input {
@@ -32,15 +31,79 @@ input {
 	float:right;
 	font-family:'NotoSans';
 	font-size:15px;
+
 }
-#weather-info{
+#main-content{
+	display:flex;
+	justify-content: center;
+	align-content: center;
 	width:100%;
 	height:70vh;
-	background-color: yellow;
+
+	background-color: blue;
 }
-#future-forecast{
+
+#weather-info{
+
+	width:25%;
+
+	background-color: green;
+}
+
+#description,#city-name{
+	text-align:center;
+}
+
+#description{
+	font-size:24px;
+}
+
+#city-name{
+	font-size:40px;
+}
+
+#temp-container{
+	display:flex;
+	flex-direction: row;
+	flex-wrap:wrap;
+	justify-content: center;
+	align-content: center;
+	margin:5px;
+
+
+}
+#temp{
+	font-size:60px;
+}
+
+#flex-item-1,#flex-item-2{
+	width:30%;
+	margin:5px;
+}
+
+#divider{
+	border-left: 3px solid black;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+#flex-item-2{
+
+	display: flex;
+	flex-wrap:wrap;
+  	justify-content: center;
+  	align-items: center;
+}
+
+#feels-like,#max-temp,#min-temp{
+	width:100%;
+	font-size:17px;
+}
+
+
+#forecast-content{
 	height:25vh;
 	width:100%;
-	background-color: purple;
+
 }
 
