@@ -2,6 +2,32 @@ let requestAPI = (() => {
 
 	let apiKey = 'a72226ceaa46bff6856874cd13357838';
 
+	let weatherConditionsIconMap = {
+		"Thunderstorm":"11d",
+		"Drizzle":"09d",
+		"Snow":"13d",
+		"Atmosphere":"50d",
+		"Clear":"01d",
+		"Rain":{
+			"light rain":"10d",
+			"moderate rain":"10d",
+			"heavy intensity rain":"10d",
+			"very heavy rain":"10d",
+			"extreme rain":"10d",
+			"freezing rain":"13d",
+			"light intensity shower rain":"09d",
+			"shower rain":"09d",
+			"heavy intensity shower rain":"09d",
+			"ragged shower rain":"09d"
+		},
+		"Clouds":{
+			"few clouds":"02d",
+			"scattered clouds":"03d",
+			"broken clouds":"04d",
+			"overcast clouds":"04d"
+		}
+	}
+
 	const getLatLong = async (input) => {
 		//if(input.contains(","))
 		
@@ -65,14 +91,27 @@ let requestAPI = (() => {
 			//console.log(payload2.daily[i].temp.min);
 			//console.log(payload2.daily[i].temp.max);
 
+			let main_description = payload2.daily[i].weather[0].main;
 			let description = payload2.daily[i].weather[0].description;
 			let temp_min = payload2.daily[i].temp.min;
 			let temp_max = payload2.daily[i].temp.max;
+			let icon_code;
+
+			if(main_description != 'Rain' && main_description != 'Clouds')
+			{
+
+				icon_code=weatherConditionsIconMap[main_description];
+			}
+			else
+			{
+				icon_code=weatherConditionsIconMap[main_description][description];
+			}
 
 			let forecastObj = {
 				description,
 				temp_min,
-				temp_max
+				temp_max,
+				icon_code
 			}
 
 			forecastArray.push(forecastObj);
@@ -92,11 +131,19 @@ let requestAPI = (() => {
 		let current_temp_max = payload2.daily[0].temp.max;
 		let current_name = payload1.name;
 		let current_country = payload1.sys.country;
-		/*let current_temp_min = payload1.main.temp_min;
-		let current_temp_max = payload1.main.temp_max;
-		let current_name = payload1.name;
-		let current_country = payload1.sys.country;*/
 
+		let icon_code;
+
+
+		if(current_main_descrip != 'Rain' && current_main_descrip != 'Clouds')
+		{
+
+			icon_code=weatherConditionsIconMap[current_main_descrip];
+		}
+		else
+		{
+			icon_code=weatherConditionsIconMap[current_main_descrip][current_description];
+		}
 
 		let currentWeatherObj = {
 
@@ -107,7 +154,8 @@ let requestAPI = (() => {
 			current_temp_max,
 			current_name,
 			current_main_descrip,
-			current_country
+			current_country,
+			icon_code,
 		};
 
 		return currentWeatherObj;

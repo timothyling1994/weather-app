@@ -10,7 +10,6 @@ let staticListeners = () => {
 		if(event.keyCode === 13 && city_search.value != ""){
 				
 			let weatherObj = await requestAPI.requestHandler(city_search.value);
-			console.log(weatherObj.currentWeatherObj);
 			domController.updateTodayDOM(weatherObj.currentWeatherObj);
 		}
 	});

@@ -14,9 +14,6 @@ let domController = (() => {
 
 		removeAllChildren(main_content);
 		removeAllChildren(forecast_content);
-
-	
-
 		
 		//flex_container.removeChild(futureForecast);
 
@@ -38,6 +35,16 @@ let domController = (() => {
 		let description_div = document.createElement("div");
 		description_div.setAttribute("id","description");
 		description_div.appendChild(description);
+
+
+		let weather_icon_container = document.createElement("div");
+		weather_icon_container.setAttribute("class","weather-icon-container");
+		let weather_icon = document.createElement("img");
+		weather_icon.setAttribute("class","main-img");
+		let img_url = `http://openweathermap.org/img/wn/${weatherObj.icon_code}@2x.png`
+		weather_icon.src = img_url;
+		weather_icon_container.appendChild(weather_icon,weather_icon_container);
+
 
 		let city_div = document.createElement("div");
 		city_div.setAttribute("id","city-name");
@@ -85,6 +92,7 @@ let domController = (() => {
 		
 		new_weather_info.appendChild(description_div,new_weather_info);
 		new_weather_info.appendChild(city_div,new_weather_info);
+		new_weather_info.appendChild(weather_icon_container,new_weather_info);
 		new_weather_info.appendChild(temp_container,new_weather_info);
 
 
@@ -113,6 +121,15 @@ let domController = (() => {
 			forecast_description_div.setAttribute("class","forecast-description");
 			forecast_description_div.appendChild(description_text);
 
+			let weather_icon_container = document.createElement("div");
+			weather_icon_container.setAttribute("class","weather-icon-container");
+			let weather_icon = document.createElement("img");
+			weather_icon.setAttribute("class","forecast-img");
+			let img_url = `http://openweathermap.org/img/wn/${forecastArray[i].icon_code}@2x.png`
+			weather_icon.src = img_url;
+			weather_icon_container.appendChild(weather_icon,weather_icon_container);
+
+
 			let forecast_min_temp_div = document.createElement("div");
 			forecast_min_temp_div.setAttribute("class","forecast-min-temp");
 			forecast_min_temp_div.appendChild(temp_min_text);
@@ -125,6 +142,7 @@ let domController = (() => {
 			day_container_div.setAttribute("class","day-container");
 			day_container_div.appendChild(day_div,day_container_div);
 			day_container_div.appendChild(forecast_description_div,day_container_div);
+			day_container_div.appendChild(weather_icon_container,day_container_div);
 			day_container_div.appendChild(forecast_min_temp_div,day_container_div);
 			day_container_div.appendChild(forecast_max_temp_div,day_container_div);
 
