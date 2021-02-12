@@ -11,6 +11,7 @@ let staticListeners = () => {
 				
 			let weatherObj = await requestAPI.requestHandler(city_search.value);
 			domController.updateTodayDOM(weatherObj.currentWeatherObj);
+			domController.updateSevenDayForecast(weatherObj.forecastWeatherArray);
 		}
 	});
 };

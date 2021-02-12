@@ -14,8 +14,6 @@ let domController = (() => {
 
 		removeAllChildren(main_content);
 		removeAllChildren(forecast_content);
-		
-		//flex_container.removeChild(futureForecast);
 
 	};
 
