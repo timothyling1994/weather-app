@@ -2,12 +2,21 @@ let requestAPI = (() => {
 
 	let apiKey = 'a72226ceaa46bff6856874cd13357838';
 
-	let weatherConditionsIconMap = {
+	let weatherConditionsIconCodeMap = {
 		"Thunderstorm":"11d",
 		"Drizzle":"09d",
 		"Snow":"13d",
 		"Atmosphere":"50d",
 		"Clear":"01d",
+		"Mist":"50d",
+		"Smoke":"50d",
+		"Haze":"50d",
+		"Dust":"50d",
+		"Fog":"50d",
+		"Sand":"50d",
+		"Ash":"50d",
+		"Squall":"50d",
+		"Tornado":"50d",
 		"Rain":{
 			"light rain":"10d",
 			"moderate rain":"10d",
@@ -28,26 +37,27 @@ let requestAPI = (() => {
 		}
 	}
 
-	const getLatLong = async (input) => {
-		//if(input.contains(","))
+	const requestLatLong = async (input) => {
 		
 		try
 		{
 			console.log("fetching lat/long");
 
-
 			let payload = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${apiKey}&units=imperial`);
+
 			let response = await payload.json();
 
 			return response;
 		}
+
+		//catching network/permission issues, rejects promise
 		catch(error){
-			console.log(error);
+			throwError(error);
 		}
 	
 	};
 
-	const getCityData = async (lat,long) => {
+	const requestCityData = async (lat,long) => {
 		try
 		{
 			console.log("fetching city data...");
@@ -58,26 +68,45 @@ let requestAPI = (() => {
 			return response;
 		}
 
+		//catching network/permission issues
 		catch(error){
-			console.log(error);
+			throwError(error);
 		}
 	};
 
 	const requestHandler = async (city_search) =>{
-		let payload1 = await requestAPI.getLatLong(city_search);
+		let payload1;
+		let payload2;
+		let todayWeatherObj;
+		let forecastWeatherArray;
 
-		let payload2 = await requestAPI.getCityData(payload1.coord.lat,payload1.coord.lon);
-
-		console.log(payload1);
-		console.log(payload2);
-
-		let currentWeatherObj = createCurrentWeatherObj(payload1,payload2);
-		let forecastWeatherArray = createForecastWeatherObj(payload2);
-
+		try {
+			payload1 = await requestAPI.requestLatLong(city_search);
+			if (payload1.cod == '404')
+			{
+				return throwError("City Not Found!");
+			}
+			else
+			{
+				payload2 = await requestAPI.requestCityData(payload1.coord.lat,payload1.coord.lon);
+				console.log("Payload 1: "+ payload1);
+				console.log("Payload 2: "+payload2);
+				todayWeatherObj = createtodayWeatherObj(payload1,payload2);
+				forecastWeatherArray = createForecastWeatherObj(payload2);
+			}
+		} 
+		catch (error){
+			throwError(error);
+		}
+		
 		//forecastWeatherArray.forEach((day)=>console.log(day));
 
-		return {currentWeatherObj,forecastWeatherArray};
+		return {todayWeatherObj,forecastWeatherArray};
 
+	};
+
+	const throwError = (msg) => {
+		return Promise.reject("Rejected due to: " + msg);
 	};
 
 	const createForecastWeatherObj = (payload2) =>{
@@ -87,9 +116,6 @@ let requestAPI = (() => {
 		//skip current day weather
 		for (let i = 1;i<8;i++)
 		{
-			//console.log(payload2.daily[i].weather[0].description);
-			//console.log(payload2.daily[i].temp.min);
-			//console.log(payload2.daily[i].temp.max);
 
 			let main_description = payload2.daily[i].weather[0].main;
 			let description = payload2.daily[i].weather[0].description;
@@ -100,11 +126,11 @@ let requestAPI = (() => {
 			if(main_description != 'Rain' && main_description != 'Clouds')
 			{
 
-				icon_code=weatherConditionsIconMap[main_description];
+				icon_code=weatherConditionsIconCodeMap[main_description];
 			}
 			else
 			{
-				icon_code=weatherConditionsIconMap[main_description][description];
+				icon_code=weatherConditionsIconCodeMap[main_description][description];
 			}
 
 			let forecastObj = {
@@ -121,7 +147,7 @@ let requestAPI = (() => {
 		return forecastArray;
 	};
 
-	const createCurrentWeatherObj = (payload1,payload2) => {
+	const createtodayWeatherObj = (payload1,payload2) => {
 
 		let current_description = payload2.current.weather[0].description;
 		let current_main_descrip = payload2.current.weather[0].main;
@@ -138,14 +164,14 @@ let requestAPI = (() => {
 		if(current_main_descrip != 'Rain' && current_main_descrip != 'Clouds')
 		{
 
-			icon_code=weatherConditionsIconMap[current_main_descrip];
+			icon_code=weatherConditionsIconCodeMap[current_main_descrip];
 		}
 		else
 		{
-			icon_code=weatherConditionsIconMap[current_main_descrip][current_description];
+			icon_code=weatherConditionsIconCodeMap[current_main_descrip][current_description];
 		}
 
-		let currentWeatherObj = {
+		let todayWeatherObj = {
 
 			current_description,
 			current_temp,
@@ -158,10 +184,10 @@ let requestAPI = (() => {
 			icon_code,
 		};
 
-		return currentWeatherObj;
+		return todayWeatherObj;
 	};
 
-	return {getLatLong,getCityData,requestHandler};
+	return {requestLatLong,requestCityData,requestHandler};
 })();
 
 export {requestAPI}

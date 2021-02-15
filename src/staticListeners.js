@@ -8,10 +8,21 @@ let staticListeners = () => {
 
 	city_search.addEventListener("keyup", async function(event){
 		if(event.keyCode === 13 && city_search.value != ""){
-				
-			let weatherObj = await requestAPI.requestHandler(city_search.value);
-			domController.updateTodayDOM(weatherObj.currentWeatherObj);
-			domController.updateSevenDayForecast(weatherObj.forecastWeatherArray);
+			
+			try {
+				let weatherObj = await requestAPI.requestHandler(city_search.value);
+
+				console.log(weatherObj);
+				if(weatherObj.todayWeatherObj != undefined && weatherObj.forecastWeatherArray !=undefined)
+				{
+					domController.updateTodayDOM(weatherObj.todayWeatherObj);
+					domController.updateSevenDayForecast(weatherObj.forecastWeatherArray);
+				}
+			}
+			catch(error){
+				console.log(error);
+			}	
+		
 		}
 	});
 };

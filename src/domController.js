@@ -25,7 +25,7 @@ let domController = (() => {
 		let feels_like = document.createTextNode('FEELS LIKE: '+Math.round(parseFloat(weatherObj.current_feels_like))+'\u00B0'+' F');
 		let temp_min = document.createTextNode('LOW: '+Math.round(parseFloat(weatherObj.current_temp_min))+'\u00B0'+' F');
 		let temp_max = document.createTextNode('HIGH: '+Math.round(parseFloat(weatherObj.current_temp_max))+'\u00B0'+' F');
-		let name = document.createTextNode(weatherObj.current_name.toUpperCase()+', ' + weatherObj.current_country.toUpperCase());
+		let name = document.createTextNode(weatherObj.current_name.toUpperCase());
 
 		let new_weather_info = document.createElement("div");
 		new_weather_info.setAttribute("id","weather-info");

@@ -33,7 +33,7 @@ body{
 	display:flex;
 	justify-content: center;
 	align-content: center;
-	margin:2vh;
+	margin:2vh 2vh 0 0;
 }
 
 input{
@@ -141,9 +141,13 @@ input{
 	width:12vw;
 	height:12vw;
 	border-top:3px solid black;
+	border-bottom:3px solid black;
 	padding-top:1vw;
+	padding-bottom:1vw;
 	margin-left:1vw;
 	margin-right:1vw;
+	margin-bottom:0.5vw;
+
 }
 
 .day,.forecast-description{
