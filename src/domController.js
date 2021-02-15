@@ -1,5 +1,21 @@
 let domController = (() => {
 
+	const cityNotFoundDOM = () => {
+		let search_bar_div = document.querySelector("#search-bar-container");
+		let error_msg = document.createElement("div");
+		let errorText = document.createTextNode("City not found!");
+		error_msg.appendChild(errorText);
+		error_msg.classList.add("error-msg");
+		search_bar_div.appendChild(error_msg,search_bar_div);
+
+	};
+
+	const removeCityNotFoundDOM = () =>{
+		let search_bar_div = document.querySelector("#search-bar-container");
+		let error_msg_div = document.querySelector(".error-msg");
+		search_bar_div.removeChild(error_msg_div);
+	};
+
 	const clearDOM = () => {
 
 		let main_content = document.querySelector("#main-content");
@@ -150,7 +166,7 @@ let domController = (() => {
 		
 	};
 
-	return{updateTodayDOM,updateSevenDayForecast};
+	return{cityNotFoundDOM,removeCityNotFoundDOM,updateTodayDOM,updateSevenDayForecast};
 
 })();
 

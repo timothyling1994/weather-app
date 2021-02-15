@@ -15,12 +15,17 @@ let staticListeners = () => {
 				console.log(weatherObj);
 				if(weatherObj.todayWeatherObj != undefined && weatherObj.forecastWeatherArray !=undefined)
 				{
+					domController.removeCityNotFoundDOM();
 					domController.updateTodayDOM(weatherObj.todayWeatherObj);
 					domController.updateSevenDayForecast(weatherObj.forecastWeatherArray);
 				}
 			}
 			catch(error){
 				console.log(error);
+				if(error=='Rejected due to: City Not Found!')
+				{
+					domController.cityNotFoundDOM();
+				}
 			}	
 		
 		}
